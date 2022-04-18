@@ -1,167 +1,242 @@
 <!DOCTYPE html>
-<html lang="en">
+        <html>
+           <head>
+              <title>Skandinavien 2021</title>
+              <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+              <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+           </head>
+           <body>
+               <!-- Bootstrap Bundle with Popper -->
+              <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
+                <div class="container-fluid">
+                  <a class="navbar-brand" href="../index.html">MyTravelMap</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="nav nav-tabs">
+                      <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="./skandinavien.html">Skandinavien 2021</a>
+                      </li>
+                      <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">Upcomping</a>
+                      </li> -->
+                    </ul>
+                  </div>
+                </div>
+              </nav>
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#F5F5F5">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <title>Hauke und Rahel unterwegs</title>
+              
+                <div id= "map" style="width: 100%; height: 100%; position:absolute;"></div>
+                <img src="./images/foto.jpg" width="300px" height="200px"/>
+          
+              
+                        
+    
+    <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
-  <link rel="stylesheet"
-    href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css">
-  <link rel="stylesheet"
-    href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css">
-  <link rel="stylesheet"
-    href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.css">
-  <link rel="stylesheet" href="assets/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.css">
-  <link rel="stylesheet" href="assets/css/app.css">
+    <script>
+      let map = L.map('map', {
+        center: [59.0, 10.7321],
+        zoom: 6,
+        }, {drawControl: true});
 
-  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon-76.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon-120.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon-152.png">
-  <link rel="icon" sizes="196x196" href="assets/img/favicon-196.png">
-  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
-</head>
+      let schlafplatzIcon = L.icon({
+        iconUrl: './images/tentMarker.svg', 
+        iconSize: [20, 20]
+        });
 
-<body>
-  <div class="shadow-sm p-3 mb-5 bg-white rounded">
-    <div class="navbar  navbar-fixed-top" role="navigation" style="background-color: #F5F5F5 ;">
-      <div class="container-fluid">
+     let wegpunktIcon = L.icon({
+        iconUrl: './images/camera.svg', 
+        iconSize: [20, 20]
+        });
 
-        <a class="navbar-brand" href="index.html">
-          <img src="assets/img/spotlog-icon.svg" alt="" width="70" height="40">
-        </a>
-
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="suedeuropablog.html" data-toggle="collapse" data-target=".navbar-collapse.in" id="blog-btn"
-              style="color: #967676;">Blog</a>
-          </li>
-          <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"
-              style="color: #967676;">Liste</a></li>
-        </ul>
-
-
-      </div>
-    </div>
-
-  </div>
-  </div>
-  </div>
-
-
-
-
-  <div id="container">
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
 
 
-    <div id="sidebar-minimal">
-      <div class="sidebar-wrapper" style="display:none" id="sidebar-show-btn">
-        <button><i class="fa fa-chevron-right"></i></button>
-      </div>
-    </div>
+    //Schlafplätze
 
-    <div id="sidebar">
-      <div class="sidebar-wrapper">
+    //Nacht 1 
+    L.marker([55.337511, 13.359679],  { title: "Schlafplatz", icon: schlafplatzIcon } ).addTo(map)
+      .bindPopup('Erster Schlafplatz nach der Fährüberfahrt. <br/>  <img src="https://lh3.googleusercontent.com/swpSUsxJvSxl_c84K4cXpkJratGJn9VPiAlnM7is5yuwC5BJz-P1kcb2lG4Pce0XZJpMVU6SMleNNS2T9-Uyspim8vrdTKS-QYlGPvlL-yfAhu4CyUheM8xeLK9yfCU1eTa93w2EfK4=w600-h315-p-k"  width="300px" height="225px" />')
 
-        <div class="panel panel-default" id="features">
-          <div class="panel-heading">
-            <h3 class="panel-title">Wegpunkte
-              <button type="button" class="btn btn-xs btn-default pull-right" id="sidebar-hide-btn"><i
-                  class="fa fa-chevron-left"></i></button>
-            </h3>
-          </div>
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-xs-12 col-md-12">
-                <input type="text" class="form-control search" placeholder="Suchen" />
-              </div>
-            </div>
-          </div>
-          <div class="sidebar-table">
-            <table class="table table-hover" id="feature-list">
-              <thead class="hidden">
-                <tr>
-                  <th>Icon</th>
-                <tr>
-                <tr>
-                  <th>Name</th>
-                <tr>
-                <tr>
-                  <th>Chevron</th>
-                <tr>
-              </thead>
-              <tbody class="list"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="map"></div>
-  </div>
-  <div id="loading">
-    <div class="loading-indicator">
-      <div class="progress progress-striped active">
-        <div class="progress-bar progress-bar-info progress-bar-full"></div>
-      </div>
-    </div>
-  </div>
+    //Nacht 2
+    L.marker([55.719272, 14.131029], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+      .bindPopup('2');
+    
+    //Nacht 3
+    L.marker([58.052819, 14.508473], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+      .bindPopup('Übernachtung auf dem Rastplatz Brahehus mit Blick auf den Vätternsee und einer alten Ruine.');
 
+    //Nacht 4
+    L.marker([59.3179087, 18.140754599999998], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+      .bindPopup('Übernachten in Stockholm auf einer "Vorinsel" auf einem Fels mit einer netten Begegnung');
 
+    //Nacht 5
+    L.marker([59.524666, 16.758896], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+      .bindPopup('Schnell noch raus aus Stockholm, um am nächsten morgen keine Maut zahlen zu müssen^Dort gab es einen wunderschönen Sonnenuntergsng in der Schären. 300km lang.^');
 
-  <div class="modal fade" id="legendModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Map Legend</h4>
-        </div>
-        <div class="modal-body">
-          <p>Map Legend goes here...</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div>/.modal
+    //Nacht 6
+    L.marker([59.292032299999995, 14.314696], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+      .bindPopup('Kleiner Stellplatz am Vismensee, den wir uns mit einem weiteren deutschen T4 geteilt haben.');
+    
+    //Nacht 7
+    L.marker([59.296267699999994, 13.5603147], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+      .bindPopup('Endlich am größten See Schwedens angekommen: Dem Värnern-See.');
 
-  <div class="modal fade" id="featureModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title text-primary" id="feature-title"></h4>
-        </div>
-        <div class="modal-body" id="feature-info"></div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+    //Nacht 8
+    L.marker([59.6448073, 12.943437099999999], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+      .bindPopup('Der schönste Stellplatz bislang. Ganz für uns alleine und mit einem wunderschönen Sonnenuntergang.:)');
 
+    //Nacht 9
+    L.marker([59.698346099999995, 12.4665716], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+      .bindPopup('Unsere letzte Nacht in Schweden, natürlich wieder direkt am See.');
 
+    //Nacht 10
+    L.marker([61.589475, 10.995931], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+      .bindPopup('Die erste Nacht in Norwegen verbrachten wir auf einem LKW-Rastplatz, da wir unbedingt eine Waschmaschiene brauchten und alle Campingplätze das Waschen ihren Gästen vorbehalten.');
 
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/typeahead.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
-  <script
-    src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js"></script>
-  <script
-    src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js"></script>
-  <script src="assets/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.js"></script>
-  <script src="assets/js/app.js"></script>
-</body>
+    //Nacht 11
+    L.marker([61.910681, 9.976051], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+      .bindPopup('Die erste Nacht im Zelt! Wir sind zwei Tage durch den Rondane Nationalpark gewandert und schliefen in der Nähe eines beeindruckenden Wasserfalls.');
 
+    //Nacht 12
+    L.marker([61.9876541, 10.029099], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+      .bindPopup('Hier standen wir direkt neben dem Eiskalten Gebirksfluss, in dem wir uns nach der Wanderung dann auch gewaschen haben.');
+
+    //Nacht 13
+    L.marker([62.756311399999994, 8.4506069], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+      .bindPopup('Unsere erste Übernachtung am Fjord! Durch den Regen konnten wir zwar nicht allzu viel sehen, dennoch war es schön.');
+
+    //Nacht 14
+    L.marker([63.012864099999994, 7.3260184], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+      .bindPopup('Wir konnten direkt neben der Atlantikstraße schlafen und da der Wettergott es gut mit uns meinte konnten wir trotzdes regenrechen tags noch einen tollen Sonnenuntergang am Meer bestaunen.');
+
+    // //Nacht 15
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    // //Nacht 16
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    // //Nacht 17
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    // //Nacht 18
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    // //Nacht 19
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    // //Nacht 20
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    // //Nacht 21
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    // //Nacht 22
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    // //Nacht 23
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    // //Nacht 24
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    // .bindPopup('');    
+
+    // //Nacht 25
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    // //Nacht 26
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    // //Nacht 27
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    // //Nacht 28
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    // //Nacht 29
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    // //Nacht 30
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    // //Nacht 31
+    // L.marker([], { title: "Schlafplatz", icon: schlafplatzIcon }).addTo(map)
+    //   .bindPopup('');
+
+    //Wegpunkte
+
+    //1
+    L.marker([55.37263514329025, 13.152266863833534], { title: "Wegpunkt", icon: wegpunktIcon}).addTo(map)
+      .bindPopup('Sonnenuntergang auf der Fähre und Fähre von Rostock nach Trelleborg. <br/> <img src="https://lh3.googleusercontent.com/F8veSZ_8MbrghDnVrOQ2tFEQWtxUQwxaLbx5znVp6-9VXZg5xEJ2IEyL0Es3oINUTdm3f75dPW6ryTRBeO119TQZ25rVhfcGIsz9jnrJ6GMbPC0qM-vPRkqGBxXGoFjN8vzqkl5lsTI=w1920-h1080',  {
+  maxWidth: "auto",
+  maxHeight: "600px"
+});
+
+// <script src="https://cdn.jsdelivr.net/npm/publicalbum@latest/embed-ui.min.js" async></script>
+<div class="pa-gallery-player-widget" style="width:100%; height:480px; display:none;"
+  data-link="https://photos.app.goo.gl/AMYprpdWtaRCJNc49"
+  data-title="New photo by Hauke Wendt">
+  <object data="https://lh3.googleusercontent.com/F8veSZ_8MbrghDnVrOQ2tFEQWtxUQwxaLbx5znVp6-9VXZg5xEJ2IEyL0Es3oINUTdm3f75dPW6ryTRBeO119TQZ25rVhfcGIsz9jnrJ6GMbPC0qM-vPRkqGBxXGoFjN8vzqkl5lsTI=w1920-h1080"></object>
+</div>
+
+    //    //Wegpunkt, 
+    //    L.marker([],{ title: "Wegpunkt", icon: wegpunktIcon}).addTo(map)
+    //   .bindPopup('Erste Städtetrip in Schweden: Ystad');
+
+    //    //Wegpunkt, 
+    //    L.marker([],{ title: "Wegpunkt", icon: wegpunktIcon}).addTo(map)
+    //   .bindPopup('Turistensightseeing: Ales stenar');
+
+      //Schlafplatz, Zelt-Icon
+      
+
+    //    //Wegpunkt, 
+    //    L.marker([],{ title: "Wegpunkt", icon: wegpunktIcon}).addTo(map)
+    //   .bindPopup('Boxenstop Kristianstadt');
+
+    //    //Wegpunkt, 
+    //    L.marker([],{ title: "Wegpunkt", icon: wegpunktIcon}).addTo(map)
+    //   .bindPopup('IKEA - Fail');
+
+      //Schlafplatz, Zelt-Icon
+     
+
+    //   L.marker([58.052819, 14.508473]).addTo(map);
+    //    //Wegpunkt, 
+    //    L.marker([],{ title: "Wegpunkt", icon: wegpunktIcon}).addTo(map)
+    //   .bindPopup('Das schlechte Wetter ausitzen in der Universitätsbibliothek von Linköping. Zum Glück konnten wir uns reinmogeln;)');
+
+      //Schlafplatz, Zelt-Icon
+    
+
+    //    //Wegpunkt, 
+    //    L.marker([],{ title: "Wegpunkt", icon: wegpunktIcon}).addTo(map)
+    //   .bindPopup('Vasa Museum Stockholm und bevorzugtest Fortbewegungsmittel, der E-Roller');
+
+    </script>
+  </body>
+           
 </html>
+
